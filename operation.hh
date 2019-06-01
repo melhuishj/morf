@@ -50,13 +50,10 @@ namespace morf {
   class SourceOp : public Operation {
   public:
     SourceOp(const InputContainer * input) {
-      std::cout << "input at 2: " << input->at(2) << std::endl;
-      std::cout << "address: " << input << std::endl;
       source = input;
     }
 
     std::optional<std::any> get(unsigned long index) {
-      std::cout << "input at 2: " << source->at(2) << std::endl;
       if (index >= source->size()) {
 	return std::nullopt;
       }

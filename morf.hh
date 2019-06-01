@@ -29,8 +29,6 @@ namespace morf {
 
     template<typename InputContainer>
     Morf<T> source(const InputContainer * input) {
-      std::cout << "input at 2: " << input->at(2) << std::endl;
-      std::cout << "address: " << input << std::endl;
       operations = std::make_unique<SourceOp<InputContainer>>(input);
       return std::move(*this);
     }
@@ -48,10 +46,8 @@ namespace morf {
 
   template<typename InputContainer, typename InputType = typename InputContainer::value_type>
   Morf<InputType> from(const InputContainer * input) {
-    std::cout << "input at 2: " << input->at(2) << std::endl;
     Morf<InputType> output {};
-    output.source(input);
-    return std::move(output);
+    return std::move(output.source(input));
   }
 }
 
