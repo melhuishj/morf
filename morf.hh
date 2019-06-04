@@ -40,6 +40,18 @@ namespace morf {
       Morf<OutputType> newmorf {std::move(operations)};
       return std::move(newmorf);
     }
+
+    std::vector<T> toVector() {
+      std::vector<T> output {};
+      std::optional<std::any> next;
+      unsigned long index {0};
+      next = operations->get(index++);
+      while (next.has_value()) {
+	output.push_back(std::any_cast<T>(*next));
+	next = operations->get(index++);
+      }
+      return output;
+    }
   private:
     std::unique_ptr<Operation> operations;
   };

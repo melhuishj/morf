@@ -8,6 +8,6 @@
 
 int main() {
   std::vector<std::string> strs {"hello", "to", "the", "world"};
-  auto result = morf::from(&strs).map([](auto val){return val.size();}).get(2);
-  std::cout << result << std::endl;
+  auto result = morf::from(&strs).map([](auto val){return val.size();}).toVector();
+  std::cout << result.size() << std::endl;
 }

@@ -24,7 +24,11 @@ namespace morf {
     }
 
     std::optional<std::any> get(unsigned long index) {
-      return operation(std::any_cast<InputType>(previous->get(index).value()));
+      std::optional<std::any> val = previous->get(index);
+      if (!val) {
+	return std::nullopt;
+      }
+      return operation(std::any_cast<InputType>(val.value()));
     }
   private:
     std::function<OutputType(InputType)> operation;
