@@ -2,7 +2,6 @@
 #include <functional>
 #include <optional>
 #include <memory>
-#include <iostream>
 
 #ifndef _OPERATION_HH_
 #define _OPERATION_HH_
@@ -32,6 +31,24 @@ namespace morf {
     }
   private:
     std::function<OutputType(InputType)> operation;
+    std::unique_ptr<Operation> previous;
+  };
+
+  class LimitOp : public Operation {
+  public:
+    LimitOp(unsigned long lim, std::unique_ptr<Operation> prev_op) {
+      limit = lim;
+      previous = std::move(prev_op);
+    }
+
+    std::optional<std::any> get(unsigned long index) {
+      if (index >= limit) {
+	return std::nullopt;
+      }
+      return previous->get(index);
+    }
+  private:
+    unsigned long limit;
     std::unique_ptr<Operation> previous;
   };
 

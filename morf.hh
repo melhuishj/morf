@@ -1,6 +1,5 @@
 #include "operation.hh"
 #include <any>
-#include <iostream>
 #include <memory>
 
 #ifndef _MORF_HH_
@@ -39,6 +38,11 @@ namespace morf {
       operations = std::make_unique<NonBlockingOp<T, OutputType>>(op, std::move(operations));
       Morf<OutputType> newmorf {std::move(operations)};
       return std::move(newmorf);
+    }
+
+    Morf<T> limit(unsigned long limit) {
+      operations = std::make_unique<LimitOp>(limit, std::move(operations));
+      return std::move(*this);
     }
 
     std::vector<T> toVector() {
